@@ -1,0 +1,34 @@
+(lp0
+VOpenAthens/Shibboleth »
+p1
+aVDOI: 10.1200/JCO.2018.36.15_suppl.9045 Journal of Clinical Oncology -\u000apublished online before print\u000a\u000a  June 1, 2018\u000a\u000a
+p2
+aVAbstract Disclosures
+p3
+aV9045
+p4
+aVBackground: BRAF mutations (muts) occur in 2-4% of NSCLC. Recent work suggests that BRAF muts may be grouped into 3 classes: 1) V600 muts that signal as monomers, 2) activating non-V600 muts that function as dimers, and 3) kinase-impaired non-V600 muts that require RAS input. Whether mut class is associated with specific clinicopathologic features or clinical outcome is unknown. Methods: We performed a retrospective analysis of NSCLC pts with BRAF muts treated at Massachusetts General Hospital and Dana-Farber Cancer Institute between 2006 and 2017 to determine clinicopathologic characteristics and estimate overall survival (OS). Results: We identified 237 pts with Stage I-IV BRAF-mutant NSCLC (107 (45%) class 1, 76 (32%) class 2, and 54 (23%) class 3). Most pts were white (85%) smokers (88%) with adenocarcinoma (90%). Smoking status was similar for pts with class 2 and 3 muts (3% vs 6% never-smokers, p = 0.649), but pts with class 1 muts were more likely to be never-smokers (22%; p < 0.001 vs class 2, p = 0.011 vs class 3). The frequency of concurrent RAS (KRAS or NRAS) co-alterations in class 1 was 1%, which was significantly lower than the frequency in class 2 (12%, p = 0.002) and class 3 (24%, p < 0.001). Nine (47%) of 19 kinase-dead tumors had RAS co-alterations. Among 140 pts with metastatic NSCLC, median OS was 40.1 months (mos, n = 69, 95% CI:17.5-56.1) for class 1, 13.9 mos (n = 39, 95% CI:7.4-18.7) for class 2, and 15.6 mos (n = 32, 95% CI 8.9-37.4) for class 3 pts. OS was not different for class 2 and 3 pts (p = 0.591), but presence of a class 1 mut was associated with improved OS (median 40.1 vs 15.6 mos when class 2 and 3 pts were pooled, HR = 0.5,95% CI 0.3-0.8, p = 0.002). When 40 pts who received therapies targeting the mitogen-activated protein kinase pathway were excluded, there was still a trend toward improved OS for class 1 muts (median 39.1 vs 13.9 mos for class 2 and 3 pts; HR = 0.6, 95% CI 0.3-1.0, p = 0.059). Conclusions: Pts with class 2 and 3 BRAF-mutant NSCLC share clinicopathologic features and outcomes that may be distinct from pts with class 1 muts. Our findings highlight the need for therapies that effectively target class 2 and 3 BRAF muts.
+p5
+aVDOI: 10.1200/JCO.2018.36.15_suppl.9045 Journal of Clinical Oncology\u000a\u000a  36, no. 15_suppl\u000a\u000a\u000a  \u000a    (May 20 2018)\u000a  \u000a  \u000a  \u000a    \u000a      9045-9045.\u000a    \u000a  \u000a\u000a
+p6
+aV Published online\u000a    June 01, 2018.\u000a	
+p7
+aV\u000aNewest Articles\u000aArchive\u000aMeeting Abstracts\u000a
+p8
+aV\u000aAbout\u000aEditorial Roster\u000aContact Us\u000aPermissions\u000a
+p9
+aV\u000aAuthors\u000aReviewers\u000aSubscribers\u000aInstitutions\u000aAdvertisers\u000a
+p10
+aV\u000aJournal of Clinical Oncology\u000aJournal of Oncology Practice\u000aJournal of Global Oncology\u000aJCO Clinical Cancer Informatics\u000aJCO Precision Oncology\u000a
+p11
+aV\u000aASCO Educational Book\u000aASCO Daily News\u000aASCO Connection\u000aThe ASCO Post\u000aJOP DAiS\u000a
+p12
+aV\u000aASCO University\u000aASCO Meetings\u000aCancer.Net\u000a
+p13
+aV\u000aASCO.org\u000aASCO Author Services\u000aASCO Career Center\u000aCancerLinQ\u000aConquer Cancer Foundation\u000aTAPUR Study\u000a
+p14
+aV\u000a\u000a\u000a
+p15
+aV\u000aTerms of Use | Privacy Policy | Cookies\u000a
+p16
+a.
