@@ -13,6 +13,7 @@ from sqlalchemy import Column, Integer, String
 class Course(Base):
 	__tablename__ = 'Course'
 	id = Column(Integer, primary_key=True)
+	course_name = Column(String)
 	classname = Column(String)
 	weekday = Column(Integer)
 	start_time = Column(Integer)
@@ -25,7 +26,8 @@ session = Session()
 
 
 url = 'http://coursefinder.utoronto.ca/course-search/search/courseSearch/course/browseSearch?deptId=ES%20&divId=ARTSC'
-page = requests.get(url, headers={'Cookie':'kualiSessionId=62484105-2b10-4161-80dc-1360c1780f03; JSESSIONID=77F353585DDFCF04F7C24CA5623DEE2B.w2; _ga=GA1.2.461670942.1560481774; _gcl_au=1.1.1342980630.1560481876; _fbp=fb.1.1560481876526.1828524231; __utmz=264236318.1565314255.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __atuvc=12%7C32; __utma=264236318.461670942.1560481774.1565322436.1565403409.3; __utmc=264236318; __utmt=1; __utmb=264236318.1.10.1565403409'})
+page = requests.get(url, headers={'Cookie':'kualiSessionId=87d7109e-e49a-4597-a150-23561e3e5973; JSESSIONID=6DF61F13759D75D5828868D82A8661F4.w2; _ga=GA1.2.461670942.1560481774; _gcl_au=1.1.1342980630.1560481876; _fbp=fb.1.1560481876526.1828524231; __utmz=264236318.1565314255.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __atuvc=14%7C32; __utmc=264236318; __utma=264236318.461670942.1560481774.1565488416.1565497432.6; __utmt=1; __utmb=264236318.2.10.1565497432'})
+print(page)
 page = json.loads(page.text)
 
 aaData = page['aaData']
@@ -35,6 +37,7 @@ print(len(aaData))
 
 def add_course_2_db(course):
 	# course = 'ESS262H1F20199'
+	print(course[:6])
 	url='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=%s'%course
 	# print(url)
 	page = requests.get(url).text
@@ -57,7 +60,7 @@ def add_course_2_db(course):
 
 		# get info
 		if count == 0:
-			lec = "%s %s"%(course, str(x.span.text.replace('\n', '').replace('\r', '')))
+			lec = "%s %s"%(course[:6], str(x.span.text.replace('\n', '').replace('\r', '')))
 		elif count == 1:
 			lec_time = x.span.text.replace('\n', '')
 			lec_time_arr = lec_time.split('\n')
@@ -72,22 +75,22 @@ def add_course_2_db(course):
 				weekday = 0
 				# get the weekday
 				if (lec_detail[0]) == '\rMONDAY':
-					weekday = 0
-				elif (lec_detail[0]) == '\rTUESDAY':
 					weekday = 1
-				elif (lec_detail[0]) == '\rWEDNESDAY':
+				elif (lec_detail[0]) == '\rTUESDAY':
 					weekday = 2
-				elif (lec_detail[0]) == '\rTHURSDAY':
+				elif (lec_detail[0]) == '\rWEDNESDAY':
 					weekday = 3
-				elif (lec_detail[0]) == '\rFRIDAY':
+				elif (lec_detail[0]) == '\rTHURSDAY':
 					weekday = 4
+				elif (lec_detail[0]) == '\rFRIDAY':
+					weekday = 5
 
 				# split time
 				time = lec_detail[1].replace(':', '-').split('-')
 				start_time = int(time[0])
 				end_time = int(time[2])
 
-				session.add(Course(classname=lec, weekday=weekday, start_time=start_time, end_time=end_time))
+				session.add(Course(course_name=course[:6], classname=lec, weekday=weekday, start_time=start_time, end_time=end_time))
 				session.commit()
 				# print(int(time[0]), int(time[2])) 
 
