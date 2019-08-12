@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # Postgres
 from sqlalchemy import create_engine
-engine = create_engine('postgresql://postgres:postgres@localhost:5432/course', echo=True)
+engine = create_engine('postgresql://postgres:postgres@localhost:5432/course')
 
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
@@ -18,15 +18,17 @@ class Course(Base):
 	weekday = Column(Integer)
 	start_time = Column(Integer)
 	end_time = Column(Integer)
-Base.metadata.drop_all(engine)
-Base.metadata.create_all(engine)
+	semester = Column(String)
+
+# Base.metadata.drop_all(engine)
+# Base.metadata.create_all(engine)
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
 
 
 url = 'http://coursefinder.utoronto.ca/course-search/search/courseSearch/course/browseSearch?deptId=ES%20&divId=ARTSC'
-page = requests.get(url, headers={'Cookie':'kualiSessionId=87d7109e-e49a-4597-a150-23561e3e5973; JSESSIONID=6DF61F13759D75D5828868D82A8661F4.w2; _ga=GA1.2.461670942.1560481774; _gcl_au=1.1.1342980630.1560481876; _fbp=fb.1.1560481876526.1828524231; __utmz=264236318.1565314255.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __atuvc=14%7C32; __utmc=264236318; __utma=264236318.461670942.1560481774.1565488416.1565497432.6; __utmt=1; __utmb=264236318.2.10.1565497432'})
+page = requests.get(url, headers={'Cookie':'kualiSessionId=b5a34b27-6add-46ae-94d6-5bd2a81708ce; JSESSIONID=5313617B3ACD4ACBAB9E48FE1669D22C.w1; _ga=GA1.2.461670942.1560481774; _gcl_au=1.1.1342980630.1560481876; _fbp=fb.1.1560481876526.1828524231; __utmz=264236318.1565314255.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __atuvc=14%7C32; __utmc=264236318; __utma=264236318.461670942.1560481774.1565573473.1565576633.10; __utmt=1; __utmb=264236318.5.10.1565576633'})
 print(page)
 page = json.loads(page.text)
 
@@ -37,7 +39,11 @@ print(len(aaData))
 
 def add_course_2_db(course):
 	# course = 'ESS262H1F20199'
+	# ESS262 is course code
+	# H1 IDK
+	# F/S/Y is Fall or Spring
 	print(course[:6])
+	print(course[8])
 	url='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId=%s'%course
 	# print(url)
 	page = requests.get(url).text
@@ -90,8 +96,15 @@ def add_course_2_db(course):
 				start_time = int(time[0])
 				end_time = int(time[2])
 
-				session.add(Course(course_name=course[:6], classname=lec, weekday=weekday, start_time=start_time, end_time=end_time))
-				session.commit()
+				# session.add(Course(
+				# 				course_name=course[:6], 
+				# 				classname=lec, 
+				# 				weekday=weekday, 
+				# 				start_time=start_time, 
+				# 				end_time=end_time,
+				# 				semester=course[8]
+				# 			))
+				# session.commit()
 				# print(int(time[0]), int(time[2])) 
 
 		count = (count+1)%8

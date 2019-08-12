@@ -22,6 +22,7 @@ class Course(Base):
 	weekday = Column(Integer)
 	start_time = Column(Integer)
 	end_time = Column(Integer)
+	semester = Column(String)
 
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
@@ -60,7 +61,10 @@ def get_data():
 	# print(request.args)
 
 	# start looping
-	all_possible_class = []
+	all_possible_class = {
+		"fall":[],
+		"spring":[]
+	}
 	for x in request.args:
 		# get the course name
 		course_name = request.args[x]
@@ -68,16 +72,31 @@ def get_data():
 			res = session.query(Course).filter(Course.course_name==course_name).all()
 			# push the result in array
 			# print(res)
-			temp = []
+			temp_s = []
+			temp_f = []
 			for c in res:
-				temp.append({
+				obj = {
 					"classname":c.classname,
 					"weekday":c.weekday,
 					"start_time":c.start_time,
-					"end_time":c.end_time
-				})
-			# push all
-			all_possible_class.append(temp)
+					"end_time":c.end_time,
+					"semester": c.semester
+				}
+
+				# append depend on semester
+				if c.semester == 'F':
+					temp_f.append(obj)
+				elif c.semester == 'S':
+					temp_s.append(obj)
+				else:
+					temp_f.append(obj)
+					temp_s.append(obj)
+
+			# push all depend on semester
+			if len(temp_f) != 0:
+				all_possible_class["fall"].append(temp_f)
+			if len(temp_s) != 0:
+				all_possible_class["spring"].append(temp_s)
 
 			
 			# return make_response({"result":result}, 200)
@@ -85,20 +104,33 @@ def get_data():
 			print(e)
 			return make_response({"result":False}, 400)
 
-	# test print
-	# print("------")
-	# for x in all_possible_class:
-	# 	print(x)
 
-	# print("------")
-	
-	if len(all_possible_class) == 0:
-		return make_response({"result":False}, 200)
+	print(all_possible_class["fall"])
+	print(all_possible_class["spring"])
 
-	result = np.array(np.meshgrid(*all_possible_class)).T.reshape(-1,len(all_possible_class))
-	print(result)
+	print("------")
 
-	return make_response({"result":result.tolist()}, 200)
+	# permutation all
+	result_f = []
+	if len(all_possible_class["fall"]):
+		result_f = np.array(np.meshgrid(*(all_possible_class["fall"])))\
+					.T.reshape(-1,len(all_possible_class["fall"])).tolist()
+		print(result_f)
+
+	result_s = []
+	if len(all_possible_class["spring"]):
+		result_s = np.array(np.meshgrid(*(all_possible_class["spring"])))\
+					.T.reshape(-1,len(all_possible_class["spring"])).tolist()
+		print(result_s)
+
+
+	return make_response(
+		{
+			"result":{
+				"fall": result_f,
+				"spring": result_s
+			}
+		}, 200)
 
 if __name__ == "__main__":
 	app.run()
