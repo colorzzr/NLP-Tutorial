@@ -31,7 +31,9 @@ session = Session()
 ####################################################### Heper ###################################################
 import numpy as np
 
-
+# es
+from elasticsearch import Elasticsearch
+es = Elasticsearch()
 
 ###################################################### FLASK ####################################################
 
@@ -132,5 +134,36 @@ def get_data():
 			}
 		}, 200)
 
+
+@app.route('/es_search', methods=['GET'])
+@cross_origin()
+def es_search():
+	print(request.args)
+	course_name = request.args['input']
+	body={
+	    "suggest": {
+	        "course-suggest" : {
+	            "prefix" : course_name, 
+	            "completion" : { 
+	                "field" : "text" 
+	            }
+	        }
+	    }
+	}
+
+	res = es.search(index="course", body=body, size=5)
+	# print(res['suggest']['course-suggest'][0]['options'])
+	return_array = []
+	for x in res['suggest']['course-suggest'][0]['options']:
+		print(x['_source'])
+		return_array.append(x['_source'])
+	
+
+	return make_response(
+		{
+			"result":return_array
+		}, 200)
+
+
 if __name__ == "__main__":
-	app.run()
+	app.run(host='0.0.0.0')
